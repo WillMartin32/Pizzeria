@@ -1,5 +1,9 @@
 {% extends "pizzas/base.html" %}
 
+{% block page_header %}
+    <h3>{{ pizza }}</h3>
+{% endblock page_header %}
+
 {% block content %}
 
 <p>Pizza: {{ pizza }}</p>

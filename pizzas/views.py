@@ -30,6 +30,7 @@ def pizza(request, pizza_id): # Same nameid as what you sent in url.py
 # get request is when we get sothing from the database. read data from database
 # post request is when we post something from the database. write data to database
 
+@login_required
 def new_pizza(request):
     if request.method != 'POST':
         form = PizzaForm()
@@ -43,8 +44,13 @@ def new_pizza(request):
     context = {'form':form}
     return render(request, 'pizzas/new_pizza.html', context)
 
+@login_required
 def new_topping(request, pizza_id):
     pizza = Pizza.objects.get(id=pizza_id)
+
+    if pizza.owner != request.user:
+        raise Http404
+
     if request.method != 'POST':
         form = ToppingForm()
     else:
@@ -59,13 +65,14 @@ def new_topping(request, pizza_id):
     context = {'form':form, 'pizza':pizza}
     return render(request, 'pizzas/new_topping.html', context)
 
+@login_required
 def edit_topping(request, topping_id):
     """Edit an existing topping."""
     topping = Topping.objects.get(id=topping_id)
     pizza = topping.pizza
 
-    #if pizza != request.user:
-    #    raise Http404
+    if pizza.owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
         # This argument tells Django to create the form prefilled
@@ -94,7 +101,7 @@ def new_comment(request, pizza_id):
             new_comment.pizza = pizza
             new_comment.owner = request.user
             new_comment.save()
-            
+
             return redirect('pizzas:pizza',pizza_id=pizza_id)
 
     context = {'form':form, 'pizza':pizza}

@@ -8,6 +8,9 @@
     {% for t in toppings %}
     <li>
         <p>{{t|linebreaks}}</p>
+        <p>
+            <a href="{% url 'pizzas:edit_topping' t.id %}">Edit topping</a>
+        </p>
     </li>
     {% empty %}
     <li> There are no toppings for this pizza.</li>

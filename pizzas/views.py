@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from .models import Pizza, Topping
 from .forms import PizzaForm, ToppingForm
+from django.http import Http404
 
 # Create your views here.
 
@@ -56,3 +57,25 @@ def new_topping(request, pizza_id):
 
     context = {'form':form, 'pizza':pizza}
     return render(request, 'pizzas/new_topping.html', context)
+
+def edit_topping(request, topping_id):
+    """Edit an existing topping."""
+    topping = Topping.objects.get(id=topping_id)
+    pizza = topping.pizza
+
+    #if pizza != request.user:
+    #    raise Http404
+
+    if request.method != 'POST':
+        # This argument tells Django to create the form prefilled
+        # with information from the existing entry object.
+        form = ToppingForm(instance=topping)
+    else:
+        # POST data submitted; process data.
+        form = ToppingForm(instance=topping, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('pizzas:pizza', pizza_id=pizza.id)
+
+    context = {'topping':topping, 'pizza':pizza, 'form': form}
+    return render(request, 'pizzas/edit_topping.html', context)

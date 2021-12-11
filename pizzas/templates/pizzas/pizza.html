@@ -7,7 +7,7 @@
 <ul>
     {% for t in toppings %}
     <li>
-        {{t}}
+        <p>{{t|linebreaks}}</p>
     </li>
     {% empty %}
     <li> There are no toppings for this pizza.</li>

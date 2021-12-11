@@ -7,17 +7,22 @@
 {% block content %}
 
 <p>Pizza: {{ pizza }}</p>
+<p>
+    <img src="https://media.istockphoto.com/photos/menu-round-italian-pizza-on-cutting-board-on-white-background-picture-id608594078?b=1&k=20&m=608594078&s=170667a&w=0&h=y-3pNNyvbI6lki6eccUcJ5LzT-CurO7ZFfWazw8Yt-8=" alt="Pizza">
+</p>
 
 <ul>
     {% for t in toppings %}
-    <li>
-        <p>{{t|linebreaks}}</p>
-        <p>
-            <a href="{% url 'pizzas:edit_topping' t.id %}">Edit topping</a>
-        </p>
-    </li>
+        <div class="card mb-3">
+            <h4 class="card-header">
+                <small><a href="{% url 'pizzas:edit_topping' t.id %}">Edit topping</a></small>
+        </h4>
+        <div class="card-body">
+            {{ t|linebreaks }}
+            </div>
+        </div>
     {% empty %}
-    <li> There are no toppings for this pizza.</li>
+    <p> There are no toppings for this pizza.</p>
     {% endfor %}
 </ul>
 <p>
@@ -25,11 +30,14 @@
 </p>
 <ul>       
     {% for c in comments %}
-    <li>
-         <p>{{c.name|linebreaks}}</p>
-    </li>
+        <div class="card mb-3">
+            <h4 class="card-header"></h4>
+        <div class="card-body">
+            {{ c.name|linebreaks }}
+            </div>
+        </div>
     {% empty %}
-    <li>No comments for this pizza have been added yet.</li>
+    <p>No comments for this pizza have been added yet.</p>
     {% endfor %}
 </ul>
 <p>

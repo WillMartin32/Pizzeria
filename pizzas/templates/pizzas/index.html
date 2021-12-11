@@ -1,9 +1,19 @@
 {% extends "pizzas/base.html" %}
 
-{% block content %}
+{% block page_header %}
+    <div class="jumbotron">
+        <h1 class="display-3">Welcome to Will's Pizza!<br>What would you like to order?</h1>
 
-<p>
-    Pizzeria has many pizza options for you.
-</p>
+        <p class="lead">Select your desired pizza. We have a great 
+            variety of options to choose from.
+            <br>
+             Let us know what you think of the pizza!</p>
 
-{% endblock content %}
+        <a class="btn btn-lg btn-primary" href="{% url 'pizzas:pizzas' %}"
+            role="button">Pizzas &raquo;</a>
+    </div>
+    <p>
+        <img src="https://pngimg.com/uploads/pizza/pizza_PNG44095.png" alt="Pizza">
+    </p>
+
+{% endblock page_header %}

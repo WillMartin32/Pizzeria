@@ -19,4 +19,16 @@
 <p>
     <a href="{% url 'pizzas:new_topping' pizza.id %}">Add a new topping</a>
 </p>
+<ul>       
+    {% for c in comments %}
+    <li>
+         <p>{{c.name|linebreaks}}</p>
+    </li>
+    {% empty %}
+    <li>No comments for this pizza have been added yet.</li>
+    {% endfor %}
+</ul>
+<p>
+    <a href="{% url 'pizzas:new_comment' pizza.id %}">Add a new comment</a>
+</p>
 {% endblock content %}

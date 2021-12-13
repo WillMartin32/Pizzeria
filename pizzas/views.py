@@ -37,6 +37,9 @@ def new_pizza(request):
     else:
         form = PizzaForm(data=request.POST)
         if form.is_valid():
+            new_pizza = form.save(commit=False)
+            new_pizza.pizza = pizza
+            new_pizza.owner = request.user
             form.save()
 
             return redirect('pizzas:pizzas')
